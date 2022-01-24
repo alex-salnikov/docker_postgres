@@ -1,0 +1,64 @@
+version: '3.8'
+services:
+  db:
+    container_name: pg_container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+#      POSTGRES_DB: test_db
+      POSTGRES_DB: postgres
+    dns:
+      - 192.168.1.30
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgresql_data:/var/lib/postgresql/data
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    entrypoint: >
+      /bin/sh -c "
+      cp -f /pgadmin4/pgpass /var/lib/pgadmin/;
+      chmod 600 /var/lib/pgadmin/pgpass;
+      chown pgadmin:pgadmin /var/lib/pgadmin/pgpass;
+      /entrypoint.sh
+      "
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+      PGADMIN_CONFIG_SERVER_MODE: "True"
+#      PGADMIN_CONFIG_SERVER_MODE: "False"
+#      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    dns:
+      - 192.168.1.30
+    ports:
+      - "5050:80"
+    volumes:
+#      - ./pgadmin_storage:/var/lib/pgadmin/storage
+      - ./config/servers.json:/pgadmin4/servers.json
+      - ./config/pgpass:/pgadmin4/pgpass
+    depends_on:
+       - db
+
+
+# docker-compose up -d
+
+# https://towardsdatascience.com/how-to-run-postgresql-and-pgadmin-using-docker-3a6a8ae918b5
+
+# backup
+# docker cp ba820ac49675:/var/lib/pgadmin/storage/admin_admin.com/library_backup ./library_test.sql
+
+# exec
+# docker exec -it 354e7e46 /bin/sh
+
+# Adding postgress connections to pgadmin in docker file
+# https://stackoverflow.com/questions/64620446/adding-postgress-connections-to-pgadmin-in-docker-file
+
+# /var/lib/pgadmin/pgpass
+# https://stackoverflow.com/questions/66578506/where-is-the-pgpass-file-in-pgadmin4-docker-container-when-this-file-is-mounted/
+# hostname:port:database:username:password
+# dockerserver.lan:5432:postgres:root:root
+# *:*:*:username:password
