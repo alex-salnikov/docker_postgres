@@ -1,7 +1,12 @@
-# Running Postgres + Pgadmin with Docker-Compose
+# Running Postgres + pgAdmin with Docker-Compose
+Containers
+- https://hub.docker.com/_/postgres
+- https://hub.docker.com/r/dpage/pgadmin4/
+
 References
 - [How to Run PostgreSQL and pgAdmin Using Docker](https://towardsdatascience.com/how-to-run-postgresql-and-pgadmin-using-docker-3a6a8ae918b5)
 - [Adding postgress connections to pgadmin in docker file](https://stackoverflow.com/questions/64620446/adding-postgress-connections-to-pgadmin-in-docker-file)
+- [pgAdmin 4 6.3 documentation / Getting Started / Deployment / Container Deployment](https://www.pgadmin.org/docs/pgadmin4/development/container_deployment.html)
 
 # pgpass
 Format
