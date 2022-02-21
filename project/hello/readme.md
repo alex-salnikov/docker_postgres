@@ -1,5 +1,7 @@
 # Tables
 
+![schema](erd.png)
+
 ## island
 - island_id
 - name
